@@ -47,6 +47,14 @@ func parseTags(yamlLines []string) ArticleHeader {
 	return h
 }
 
+func getTagMap(headers []ArticleHeader) map[string][]string {
+	m := make(map[string][]string)
+	for _, header := range headers {
+		m[header.Title] = header.Tag
+	}
+	return m
+}
+
 func main() {
 	buf, err := ioutil.ReadFile("test.md")
 	if err != nil {
@@ -57,5 +65,6 @@ func main() {
 		fmt.Printf("%d: %s\n", i, item)
 	}
 	h := parseTags(yamlLines)
-	fmt.Println(h)
+	m := getTagMap([]ArticleHeader{h})
+	fmt.Println(m)
 }

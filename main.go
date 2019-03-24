@@ -18,6 +18,9 @@ type ArticleHeader struct {
 	Tag   []string
 }
 
+type PairTitleAndTags map[string][]string
+type PairTagAndCount map[string]int
+
 func takeYamlLines(buf []byte) []string {
 	fileContent := string(buf)
 	fileContentArray := strings.Split(fileContent, "\n")
@@ -47,12 +50,28 @@ func parseTags(yamlLines []string) ArticleHeader {
 	return h
 }
 
-func getTagMap(headers []ArticleHeader) map[string][]string {
+func getTagMap(headers []ArticleHeader) PairTitleAndTags {
 	m := make(map[string][]string)
 	for _, header := range headers {
 		m[header.Title] = header.Tag
 	}
 	return m
+}
+
+func countTag(m PairTitleAndTags) PairTagAndCount {
+	countTagMap := make(PairTagAndCount)
+	for _, tags := range m {
+		for _, tag := range tags {
+			countTagMap[tag] += 1
+		}
+	}
+	return countTagMap
+}
+
+func printTags(c PairTagAndCount) {
+	for k, v := range c {
+		fmt.Printf("%s:\t%d\n", k, v)
+	}
 }
 
 func main() {
@@ -61,10 +80,8 @@ func main() {
 		panic(err)
 	}
 	yamlLines := takeYamlLines(buf)
-	for i, item := range yamlLines {
-		fmt.Printf("%d: %s\n", i, item)
-	}
 	h := parseTags(yamlLines)
 	m := getTagMap([]ArticleHeader{h})
-	fmt.Println(m)
+	c := countTag(m)
+	printTags(c)
 }

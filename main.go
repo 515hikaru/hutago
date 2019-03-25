@@ -1,9 +1,11 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
 	"strings"
 
 	"gopkg.in/yaml.v2"
@@ -19,6 +21,25 @@ type ArticleHeader struct {
 
 type PairTitleAndTags map[string][]string
 type PairTagAndCount map[string]int
+
+func listDirectoryContens(directoryName string, _recursive bool) ([]string, error) {
+	items, err := ioutil.ReadDir(directoryName)
+	if err != nil {
+		return nil, err
+	}
+	// TODO: calc size for `recursive` true case
+	var files []string
+
+	for _, item := range items {
+		if item.IsDir() {
+			// TODO: impl recursive == true
+			continue
+		} else {
+			files = append(files, item.Name())
+		}
+	}
+	return files, nil
+}
 
 func takeYamlLines(buf []byte) []string {
 	fileContent := string(buf)
@@ -74,13 +95,29 @@ func printTags(c PairTagAndCount) {
 }
 
 func main() {
-	buf, err := ioutil.ReadFile("test.md")
+	recursive := flag.Bool("r", false, "search directories and their contents recursively")
+	flag.Parse()
+	targetDirectory := flag.Arg(0)
+	fileNames, err := listDirectoryContens(targetDirectory, *recursive)
 	if err != nil {
 		panic(err)
 	}
-	yamlLines := takeYamlLines(buf)
-	h := parseTags(yamlLines)
-	m := getTagMap([]ArticleHeader{h})
+	headers := make([]ArticleHeader, len(fileNames))
+	for _, fileName := range fileNames {
+		filePath := path.Join(targetDirectory, fileName)
+		buf, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			panic(err)
+		}
+		yamlLines := takeYamlLines(buf)
+		h := parseTags(yamlLines)
+		headers = append(headers, h)
+	}
+	if err != nil {
+		fmt.Println("boo")
+		panic(err)
+	}
+	m := getTagMap(headers)
 	c := countTag(m)
 	printTags(c)
 }

@@ -3,11 +3,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 
 	"gopkg.in/yaml.v2"
-
-	"log"
 )
 
 const yamlDelimiter = "---"
@@ -45,7 +44,7 @@ func parseTags(yamlLines []string) ArticleHeader {
 	h := ArticleHeader{}
 	err := yaml.Unmarshal(yamlBytes, &h)
 	if err != nil {
-		log.Fatalf("error: %v", err)
+		fmt.Fprintf(os.Stderr, "error: %v", err)
 	}
 	return h
 }

@@ -1,2 +1,3 @@
-# tagcounter
-YAML counter
+# mhugo
+
+Hugo articles frontmatter controller.

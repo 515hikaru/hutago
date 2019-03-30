@@ -1,6 +1,9 @@
 package loader
 
-import "io/ioutil"
+import (
+	"io/ioutil"
+	"path"
+)
 
 // ListDirectoryContents gets slice of file paths.
 // If recursive is true, it searches file recursivly.
@@ -9,7 +12,6 @@ func ListDirectoryContents(directoryName string, _recursive bool) ([]string, err
 	if err != nil {
 		return nil, err
 	}
-	// TODO: calc size for `recursive` true case
 	var files []string
 
 	for _, item := range items {
@@ -17,8 +19,20 @@ func ListDirectoryContents(directoryName string, _recursive bool) ([]string, err
 			// TODO: impl recursive == true
 			continue
 		} else {
-			files = append(files, item.Name())
+			fileName := item.Name()
+			if isMarkdown(fileName) {
+				files = append(files, fileName)
+			}
 		}
 	}
 	return files, nil
+}
+
+func isMarkdown(fileName string) bool {
+	if path.Ext(fileName) == ".md" {
+		return true
+	} else if path.Ext(fileName) == ".markdown" {
+		return true
+	}
+	return false
 }

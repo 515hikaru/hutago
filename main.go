@@ -29,7 +29,7 @@ func run() {
 		os.Exit(failCode)
 	}
 	if len(fileNames) == 0 {
-		fmt.Fprintf(os.Stderr, "%s has not markdown files.\n", targetDirectory)
+		fmt.Fprintf(os.Stderr, "%s has no markdown files.\n", targetDirectory)
 		os.Exit(failCode)
 	}
 	mmap, err := parser.CreateMapTitleWithTag(fileNames, targetDirectory)

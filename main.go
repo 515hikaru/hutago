@@ -21,6 +21,7 @@ func run() {
 	targetDirectory := flag.Arg(0)
 	if targetDirectory == "" {
 		fmt.Fprintf(os.Stderr, "Specify directory name\n")
+		os.Exit(failCode)
 	}
 	fileNames, err := loader.ListDirectoryContents(targetDirectory, *recursive)
 	if err != nil {

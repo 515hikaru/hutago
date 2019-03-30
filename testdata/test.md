@@ -1,7 +1,7 @@
 ---
 title: "This is a test article"
 draft: false
-tag: ["foo", "bar"]
+tags: ["foo", "bar"]
 ---
 
 # Foo

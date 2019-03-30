@@ -11,7 +11,7 @@ type ArticleHeader struct {
 	Title string
 	Date  string
 	Draft bool
-	Tag   []string
+	Tags  []string
 }
 
 type PairTitleAndTags map[string][]string
@@ -51,7 +51,7 @@ func parseTags(yamlLines []string) (ArticleHeader, error) {
 func getTagMap(headers []ArticleHeader) PairTitleAndTags {
 	m := make(map[string][]string)
 	for _, header := range headers {
-		m[header.Title] = header.Tag
+		m[header.Title] = header.Tags
 	}
 	return m
 }

@@ -31,8 +31,9 @@ func takeYamlLines(buf []byte) []string {
 		} else if line == yamlDelimiter && flg == true {
 			break
 		}
-
-		yamlLines = append(yamlLines, line)
+		if flg == true {
+			yamlLines = append(yamlLines, line)
+		}
 	}
 	return yamlLines
 }

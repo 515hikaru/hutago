@@ -9,6 +9,7 @@ import (
 
 type ArticleHeader struct {
 	Title string
+	Date  string
 	Draft bool
 	Tag   []string
 }

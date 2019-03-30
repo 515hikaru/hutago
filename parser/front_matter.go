@@ -1,9 +1,7 @@
 package parser
 
 import (
-	"fmt"
 	"io/ioutil"
-	"os"
 	"path"
 	"strings"
 
@@ -39,15 +37,15 @@ func takeYamlLines(buf []byte) []string {
 	return yamlLines
 }
 
-func parseTags(yamlLines []string) ArticleHeader {
+func parseTags(yamlLines []string) (ArticleHeader, error) {
 	yamlContent := (strings.Join(yamlLines, "\n"))
 	yamlBytes := []byte(yamlContent)
 	h := ArticleHeader{}
 	err := yaml.Unmarshal(yamlBytes, &h)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "error: %v", err)
+		return ArticleHeader{}, err
 	}
-	return h
+	return h, nil
 }
 
 func getTagMap(headers []ArticleHeader) PairTitleAndTags {
@@ -67,7 +65,10 @@ func CreateMapTitleWithTag(fileNames []string, parentPath string) (PairTitleAndT
 			return nil, err
 		}
 		yamlLines := takeYamlLines(buf)
-		h := parseTags(yamlLines)
+		h, err := parseTags(yamlLines)
+		if err != nil {
+			return nil, err
+		}
 		headers = append(headers, h)
 	}
 	m := getTagMap(headers)

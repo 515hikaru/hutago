@@ -7,7 +7,7 @@ import (
 
 // ListDirectoryContents gets slice of file paths.
 // If recursive is true, it searches file recursivly.
-func ListDirectoryContents(directoryName string, _recursive bool) ([]string, error) {
+func ListDirectoryContents(directoryName string, recursive bool) ([]string, error) {
 	items, err := ioutil.ReadDir(directoryName)
 	if err != nil {
 		return nil, err
@@ -16,12 +16,21 @@ func ListDirectoryContents(directoryName string, _recursive bool) ([]string, err
 
 	for _, item := range items {
 		if item.IsDir() {
-			// TODO: impl recursive == true
-			continue
+			if recursive == false {
+				continue
+			}
+			targetPath := path.Join(directoryName, item.Name())
+			childFiles, err := ListDirectoryContents(targetPath, recursive)
+			if err != nil {
+				return nil, err
+			}
+			for _, file := range childFiles {
+				files = append(files, file)
+			}
 		} else {
-			fileName := item.Name()
-			if isMarkdown(fileName) {
-				files = append(files, fileName)
+			filePath := path.Join(directoryName, item.Name())
+			if isMarkdown(filePath) {
+				files = append(files, filePath)
 			}
 		}
 	}

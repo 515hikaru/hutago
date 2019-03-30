@@ -2,7 +2,6 @@ package parser
 
 import (
 	"io/ioutil"
-	"path"
 	"strings"
 
 	"gopkg.in/yaml.v2"
@@ -56,10 +55,9 @@ func getTagMap(headers []ArticleHeader) PairTitleAndTags {
 	return m
 }
 
-func CreateMapTitleWithTag(fileNames []string, parentPath string) (PairTitleAndTags, error) {
-	headers := make([]ArticleHeader, len(fileNames))
-	for _, fileName := range fileNames {
-		filePath := path.Join(parentPath, fileName)
+func CreateMapTitleWithTag(filePaths []string, parentPath string) (PairTitleAndTags, error) {
+	headers := make([]ArticleHeader, len(filePaths))
+	for _, filePath := range filePaths {
 		buf, err := ioutil.ReadFile(filePath)
 		if err != nil {
 			return nil, err

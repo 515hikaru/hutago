@@ -8,22 +8,24 @@ import (
 	"github.com/515hikaru/mhugo/parser"
 )
 
+type PairTagAndCount map[string]int
+
 type tc struct {
 	Tag   string
 	Count int
 }
 
-func countTag(m parser.PairTitleAndTags) parser.PairTagAndCount {
-	countTagMap := make(parser.PairTagAndCount)
-	for _, tags := range m {
-		for _, tag := range tags {
+func countTag(tt []parser.TitleAndTags) PairTagAndCount {
+	countTagMap := make(PairTagAndCount)
+	for _, t := range tt {
+		for _, tag := range t.Tags {
 			countTagMap[tag] += 1
 		}
 	}
 	return countTagMap
 }
 
-func sortCount(c parser.PairTagAndCount) ([]tc, int) {
+func sortCount(c PairTagAndCount) ([]tc, int) {
 	var tcs []tc
 	var maxLength int
 	for k, v := range c {
@@ -39,8 +41,8 @@ func sortCount(c parser.PairTagAndCount) ([]tc, int) {
 	return tcs, maxLength
 }
 
-func PrintTags(m parser.PairTitleAndTags) {
-	c := countTag(m)
+func PrintTags(tt []parser.TitleAndTags) {
+	c := countTag(tt)
 	sorted, width := sortCount(c)
 	for _, t := range sorted {
 		diff := width - len(t.Tag)

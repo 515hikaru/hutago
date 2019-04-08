@@ -14,11 +14,6 @@ type ArticleHeader struct {
 	Tags  []string
 }
 
-type TitleAndTags struct {
-	Title string
-	Tags  []string
-}
-
 const yamlDelimiter = "---"
 
 func takeYamlLines(buf []byte) []string {
@@ -51,20 +46,7 @@ func parseTags(yamlLines []string) (ArticleHeader, error) {
 	return h, nil
 }
 
-func getTagMap(headers []ArticleHeader) []TitleAndTags {
-	tt := make([]TitleAndTags, len(headers))
-	for _, header := range headers {
-		t := TitleAndTags{
-			Title: header.Title,
-			Tags:  header.Tags,
-		}
-		tt = append(tt, t)
-	}
-
-	return tt
-}
-
-func CreateTTs(filePaths []string, parentPath string) ([]TitleAndTags, error) {
+func CreateHeaders(filePaths []string, parentPath string) ([]ArticleHeader, error) {
 	headers := make([]ArticleHeader, len(filePaths))
 	for _, filePath := range filePaths {
 		buf, err := ioutil.ReadFile(filePath)
@@ -78,6 +60,5 @@ func CreateTTs(filePaths []string, parentPath string) ([]TitleAndTags, error) {
 		}
 		headers = append(headers, h)
 	}
-	m := getTagMap(headers)
-	return m, nil
+	return headers, nil
 }

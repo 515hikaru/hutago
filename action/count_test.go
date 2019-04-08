@@ -7,8 +7,8 @@ import (
 )
 
 func TestSimpleCountTag(t *testing.T) {
-	tt := []parser.TitleAndTags{
-		parser.TitleAndTags{
+	tt := []parser.ArticleHeader{
+		parser.ArticleHeader{
 			Title: "title1",
 			Tags:  []string{"foo", "bar"},
 		},
@@ -23,12 +23,12 @@ func TestSimpleCountTag(t *testing.T) {
 }
 
 func TestMultiCountTag(t *testing.T) {
-	tt := []parser.TitleAndTags{
-		parser.TitleAndTags{
+	tt := []parser.ArticleHeader{
+		parser.ArticleHeader{
 			Title: "title1",
 			Tags:  []string{"foo", "bar"},
 		},
-		parser.TitleAndTags{
+		parser.ArticleHeader{
 			Title: "title2",
 			Tags:  []string{"foo", "boo", "boo"},
 		},

@@ -15,35 +15,42 @@ type tc struct {
 	Count int
 }
 
-func countTag(tt []parser.TitleAndTags) PairTagAndCount {
+func countTag(headers []parser.ArticleHeader) PairTagAndCount {
 	countTagMap := make(PairTagAndCount)
-	for _, t := range tt {
-		for _, tag := range t.Tags {
+	for _, header := range headers {
+		for _, tag := range header.Tags {
 			countTagMap[tag] += 1
 		}
 	}
 	return countTagMap
 }
 
-func sortCount(c PairTagAndCount) ([]tc, int) {
-	var tcs []tc
+func getMaxLength(c PairTagAndCount) int {
 	var maxLength int
-	for k, v := range c {
-		if len(k) >= maxLength {
-			maxLength = len(k)
+	for k, _ := range c {
+		if l := len(k); l >= maxLength {
+			maxLength = l
 		}
+	}
+	return maxLength
+}
+
+func sortCount(c PairTagAndCount) []tc {
+	var tcs []tc
+	for k, v := range c {
 		t := tc{Tag: k, Count: v}
 		tcs = append(tcs, t)
 	}
 	sort.Slice(tcs, func(i, j int) bool {
 		return tcs[i].Count > tcs[j].Count
 	})
-	return tcs, maxLength
+	return tcs
 }
 
-func PrintTags(tt []parser.TitleAndTags) {
-	c := countTag(tt)
-	sorted, width := sortCount(c)
+func PrintTags(headers []parser.ArticleHeader) {
+	c := countTag(headers)
+	sorted := sortCount(c)
+	width := getMaxLength(c)
 	for _, t := range sorted {
 		diff := width - len(t.Tag)
 		interval := strings.Repeat(" ", diff)

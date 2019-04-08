@@ -32,7 +32,7 @@ func run() {
 		fmt.Fprintf(os.Stderr, "%s has no markdown files.\n", targetDirectory)
 		os.Exit(failCode)
 	}
-	mmap, err := parser.CreateTTs(fileNames, targetDirectory)
+	mmap, err := parser.CreateHeaders(fileNames, targetDirectory)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: %v\n", err)
 		os.Exit(failCode)

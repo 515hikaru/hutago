@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/515hikaru/mhugo.svg?branch=master)](https://travis-ci.org/515hikaru/mhugo)
+[![Build Status](https://travis-ci.org/515hikaru/hutago.svg?branch=master)](https://travis-ci.org/515hikaru/hutago)
 
-# mhugo
+# hutago
 
-Hugo articles frontmatter controller.
+Hugo articles' tag controller.

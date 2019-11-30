@@ -8,6 +8,7 @@ import (
 	"github.com/515hikaru/hutago/parser"
 )
 
+// PairTagAndCount holds the tag name and its frequency
 type PairTagAndCount map[string]int
 
 type tc struct {
@@ -19,7 +20,7 @@ func countTag(headers []parser.ArticleHeader) PairTagAndCount {
 	countTagMap := make(PairTagAndCount)
 	for _, header := range headers {
 		for _, tag := range header.Tags {
-			countTagMap[tag] += 1
+			countTagMap[tag]++
 		}
 	}
 	return countTagMap
@@ -27,7 +28,7 @@ func countTag(headers []parser.ArticleHeader) PairTagAndCount {
 
 func getMaxLength(c PairTagAndCount) int {
 	var maxLength int
-	for k, _ := range c {
+	for k := range c {
 		if l := len(k); l >= maxLength {
 			maxLength = l
 		}
@@ -47,6 +48,7 @@ func sortCount(c PairTagAndCount) []tc {
 	return tcs
 }
 
+// PrintTags prints tag name and the tag frequency
 func PrintTags(headers []parser.ArticleHeader) {
 	c := countTag(headers)
 	sorted := sortCount(c)

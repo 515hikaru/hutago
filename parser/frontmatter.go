@@ -7,6 +7,7 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// ArticleHeader holds meta data for an article.
 type ArticleHeader struct {
 	Title string
 	Date  string
@@ -46,6 +47,7 @@ func parseTags(yamlLines []string) (ArticleHeader, error) {
 	return h, nil
 }
 
+// CreateHeaders creates ArticleHeader structs
 func CreateHeaders(filePaths []string, parentPath string) ([]ArticleHeader, error) {
 	headers := make([]ArticleHeader, len(filePaths))
 	for _, filePath := range filePaths {

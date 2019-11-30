@@ -20,8 +20,8 @@ func run() {
 	flag.Parse()
 	targetDirectory := flag.Arg(0)
 	if targetDirectory == "" {
-		fmt.Fprintf(os.Stderr, "Specify directory name\n")
-		os.Exit(failCode)
+		targetDirectory = "contents"
+		*recursive = true
 	}
 	fileNames, err := loader.ListDirectoryContents(targetDirectory, *recursive)
 	if err != nil {

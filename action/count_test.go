@@ -3,7 +3,7 @@ package action
 import (
 	"testing"
 
-	"github.com/515hikaru/mhugo/parser"
+	"github.com/515hikaru/hutago/parser"
 )
 
 func TestSimpleCountTag(t *testing.T) {

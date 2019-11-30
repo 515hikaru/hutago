@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/515hikaru/mhugo/action"
-	"github.com/515hikaru/mhugo/loader"
-	"github.com/515hikaru/mhugo/parser"
+	"github.com/515hikaru/hutago/action"
+	"github.com/515hikaru/hutago/loader"
+	"github.com/515hikaru/hutago/parser"
 )
 
 const (

@@ -5,7 +5,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/515hikaru/mhugo/parser"
+	"github.com/515hikaru/hutago/parser"
 )
 
 type PairTagAndCount map[string]int

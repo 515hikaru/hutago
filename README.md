@@ -1,4 +1,5 @@
 ![Test Status](https://github.com/515hikaru/hutago/workflows/Test/badge.svg)
+![release](https://github.com/515hikaru/hutago/workflows/release/badge.svg)
 
 # hutago
 

@@ -11,7 +11,7 @@ import (
 )
 
 const (
-	varsion     = "0.1.1-dev"
+	varsion     = "v0.1.0"
 	failCode    = 1
 	successCode = 0
 )
